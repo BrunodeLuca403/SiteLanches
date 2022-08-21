@@ -23,15 +23,13 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Lanche" asp-action="List">Lanches</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Lanche" asp-action="List">Cardápio</a>
                         </li>
                          <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Contato" asp-action="Index">Contato</a>
                         </li>
-                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Categoria" asp-action="List">Categoria</a>
-                        </li>
                         @await Component.InvokeAsync("CarrinhoCompraResumo")
+                     
                     </ul>
                 </div>
             </div>
@@ -39,6 +37,8 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+               @await Component.InvokeAsync("CategoriaMenu")
+               <br />
             @RenderBody()
         </main>
     </div>
