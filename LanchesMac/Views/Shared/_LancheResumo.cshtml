@@ -2,7 +2,17 @@
 
  <div class="col-sm-4 col-md-4 col-lg-4">
     <p><img src="@Model.ImageBig" class="img-fluid"></p>
-    <h3>@Model.price.ToString("c")</h3> 
-    <h4>@Model.Name</h4>
+    <h3>@Model.price.ToString("c")</h3>
+    
+    <a asp-controller="Lanche" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a>
+    
     <p>@Model.DescriptionSmall</p>
+    <div>
+        <p>
+            <a class="btn btn-primary" id="cartButton" asp-controller="CarrinhoCompra" asp-action="AdicionarItemNoCarrinho" asp-route-Id="@Model.Id">
+                Adicionar no Carrinho
+            </a>
+        </p>
+    </div>
+        
  </div>

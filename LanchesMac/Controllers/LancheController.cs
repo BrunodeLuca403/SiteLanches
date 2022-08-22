@@ -1,4 +1,5 @@
 ﻿using LanchesMac.Models;
+using LanchesMac.Repository;
 using LanchesMac.Repository.Interface;
 using LanchesMac.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -28,14 +29,16 @@ namespace LanchesMac.Controllers
             }
             else
             {
-                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
-                {
-                    lanches = _LancheRepository.Lanches.Where(c => c.Name.Equals("Normal")).OrderBy(l => l.Name);
-                }
-                else
-                {
-                    lanches = _LancheRepository.Lanches.Where(c => c.Name.Equals("Natural")).OrderBy(l => l.Name);
-                }
+                //if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
+                //{
+                //    lanches = _LancheRepository.Lanches.Where(c => c.Name.Equals("Normal")).OrderBy(l => l.Name);
+                //}
+                //else
+                //{
+                //    lanches = _LancheRepository.Lanches.Where(c => c.Name.Equals("Natural")).OrderBy(l => l.Name);
+                //}
+
+                lanches = _LancheRepository.Lanches.Where(l=> l.Categoria.Name.Equals(categoria)).OrderBy(c => c.Name);
               
             }
               var lancheListViewModel = new LancheListViewModel
@@ -48,5 +51,12 @@ namespace LanchesMac.Controllers
             
         }
 
+
+        public IActionResult Details(int id)
+        {
+            var lanche = _LancheRepository.Lanches.FirstOrDefault(l => l.Id == id);
+
+                return View(lanche);
+        }
     }
 }
