@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<AppDbContext>();
 
+builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));

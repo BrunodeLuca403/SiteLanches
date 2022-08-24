@@ -1,13 +1,63 @@
 ﻿@model HomeViewModel
 
-<partial name="_carousel" />
+<div class="row text-center">
+    <h2>Lanches</h2>
+</div>
 
-<h2> Os Lanches preferidos da semana</h2>
-<h4>Tá com fome ????</h4>
+<div class="container">
+    <section id="sobre">
+        <div class="row justify-content-center">
+            <div class="col-xs-12 col-sm-6  col-md-3 text-center">
+                 <img src="~/Images/leiaute/icons8-love-50.png" />
+                 <h3>Feitos com amor</h3>
+                 <p class="text-muted">Fazemos seu lanche com carinho</p>
+            </div>
 
-<div class="row">
-    @foreach(var lanche in Model.LanchesPreferidos)
-    {
-        <partial name="_LancheResumo" for="@lanche"/>
-    }
+            <div class="col-xs-12 col-sm-6  col-md-3 text-center">
+                 <img src="~/Images/leiaute/icons8-get-dressed-50.png" />
+                 <h3>Pontos pra entrega</h3>
+                 <p class="text-muted">Entregamos o seu pedido</p>
+            </div>
+
+            <div class="col-xs-12 col-sm-6  col-md-3 text-center">
+                 <img src="~/Images/leiaute/icons8-desconto-48.png" />
+                 <h3>Preços que combinam no seu bolso</h3>
+                 <p class="text-muted">Promoções imperdíveis</p>
+            </div>
+
+            <div class="col-xs-12 col-sm-6  col-md-3 text-center">
+                 <img src="~/Images/leiaute/icons8-comida-natural-50.png" />
+                 <h3>Lanches naturais</h3>
+                 <p class="text-muted">Saudáveis e naturais</p>
+            </div>
+        </div>
+
+    </section >
+        
+    <section id="Portifolio">
+        @await Html.PartialAsync("_IndexPartial")
+    </section><br />
+
+    <section id="contato">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-5 offset-1" style="color: black">
+                <h4>&copy; 2022 - LanchesMac</h4>
+                <p class="text-justify">
+                    Aqui você encontra o melhor lanche da região com o melhor, feito com amor e carinho pelos nossos cozinheiros.
+                    Ingredientes separados manualmente feito com atenção e carinho, para que consiga ficar com qualidade e o mais importante com sabor delicioso.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-5 offset-1" style="color: black">
+                <h4>Tem alguma duvída ?</h4>
+                <ul class="list-unstyled">
+                    <li class="py-1">Av. Bueno de andrade 56 setor-2 Quadra-7</li>
+                    <li class="py-1">(41)3276-8483</li>
+                    <li class="py-1"><a href="">LanchesMac</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
 </div>

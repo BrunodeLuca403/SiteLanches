@@ -1,0 +1,21 @@
+﻿<div class="row no-gutter">
+    @{
+        string[] imgs =
+            {
+           "~/Images/carousel11.jpg",
+           "~/Images/carousel12.jpg",
+           "~/Images/carousel13.jpg",
+           "~/Images/carousel14.jpg",
+           "~/Images/carousel17.jpg"
+        };
+    }
+
+    @foreach (var img in imgs)
+    {
+       <div class="col-xs-2 col-md-2">
+           <a class="portifolio-box" asp-action="List" asp-controller="Lanche">
+               <img src="@Url.Content(img)" alt="lanches" width="450" height="220">
+           </a>
+       </div>
+    }
+</div>

@@ -30,7 +30,10 @@ namespace LanchesMac.Models
 
         public void AdicionarCarrinho (Lanche lanche)
         {
-            var carrinhoCompraItem = _context.CarrinhoCompraItens.SingleOrDefault(c => c.Lanche.Id == lanche.Id && CarrinhoCompraId == CarrinhoCompraId);
+            var carrinhoCompraItem = _context.CarrinhoCompraItens.SingleOrDefault(
+                     s => s.Lanche.Id == lanche.Id &&
+                     s.CarrinhoCompraId == CarrinhoCompraId);
+
             if (carrinhoCompraItem == null)
             {
                 carrinhoCompraItem = new CarrinhoCompraItem
@@ -39,7 +42,6 @@ namespace LanchesMac.Models
                     Lanche = lanche,
                     Quantidade = 1
                 };
-
                 _context.CarrinhoCompraItens.Add(carrinhoCompraItem);
             }
             else
@@ -51,7 +53,9 @@ namespace LanchesMac.Models
 
         public int RemoverCarrinho(Lanche lanche)
         {
-            var carrinhoCompraItem = _context.CarrinhoCompraItens.SingleOrDefault(s => s.Lanche.Id == lanche.Id && s.CarrinhoCompraId == CarrinhoCompraId);
+            var carrinhoCompraItem = _context.CarrinhoCompraItens
+                                     .SingleOrDefault(s => s.Lanche.Id == lanche.Id && 
+                                     s.CarrinhoCompraId == CarrinhoCompraId);
 
             var quantidadeLocal = 0;
 
@@ -73,10 +77,10 @@ namespace LanchesMac.Models
 
         public List<CarrinhoCompraItem> GetCarrinhoCompraItens()
         {
-            return CarrinhoCompraItems??(CarrinhoCompraItems = _context.CarrinhoCompraItens
-                                                                         .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
-                                                                         .Include(s => s.Lanche)
-                                                                         .ToList());
+            return CarrinhoCompraItems ?? (CarrinhoCompraItems = _context.CarrinhoCompraItens
+                                                               .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
+                                                               .Include(s => s.Lanche)
+                                                                .ToList());
         }
 
         public void LimparCarrinho()

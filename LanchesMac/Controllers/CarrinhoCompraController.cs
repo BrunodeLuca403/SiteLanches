@@ -31,7 +31,8 @@ namespace LanchesMac.Controllers
 
         public RedirectToActionResult AdicionarItemNoCarrinhoCompra(int id)
         {
-            var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.Id == id);
+            var lancheSelecionado = _lancheRepository.Lanches.
+                                    FirstOrDefault(p => p.Id == id);
 
             if (lancheSelecionado != null)
             {
@@ -43,7 +44,8 @@ namespace LanchesMac.Controllers
 
         public IActionResult RemoverItemDoCarrinho (int id)
         {
-            var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.Id == id);
+            var lancheSelecionado = _lancheRepository.Lanches
+                                     .FirstOrDefault(p => p.Id == id);
 
             if (lancheSelecionado != null)
             {
