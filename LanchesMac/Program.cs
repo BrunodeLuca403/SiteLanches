@@ -2,6 +2,7 @@ using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repository;
 using LanchesMac.Repository.Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
 builder.Services.AddControllersWithViews();
 
 
@@ -40,7 +43,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
