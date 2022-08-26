@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+
+@if(SignInManager.IsSignedIn(User))
+{
+   @* <form asp-area="" asp-controller="Account" asp-action="Logout" id="logooutForm" method="post" class="navbar-left">*@
+        @*<ul class="nav navbar-nav navbar-left">
+            <button type="submit" style="widht:auto; color:brown" class="nav-link btn-link py-0">
+               sair da conta  : @User.Identity.Name &nbsp;
+            </button>
+        </ul>*@
+
+        <div class="btn-group">
+                 <button type="button" class="btn btn-outline-dark" data-bs-toggle="dropdown" aria-expanded="false"><img style="width:25px; height:25px;" src="~/Images/configuracao.png"/></button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Bem vindo! @User.Identity.Name</a></li>
+                <form asp-area="" asp-controller="Pedido" asp-action="CheckoutCompleto" id="logooutForm" method="post">
+                <li><a class="dropdown-item" href="#">Pedidos</a></li>
+                </form>
+                <li><a class="dropdown-item" href="#">Configuração da conta</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <form asp-area="" asp-controller="Account" asp-action="Logout" id="logooutForm" method="post">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-danger"><img style="width:25px; height:25px;" src="~/Images/sair.png"/> sair</button>
+                    </div>
+                </form>
+            </ul>
+        </div>
+    @*</form>*@
+}
+else
+{
+    <ul class="nav navbar-nav navbar-left">
+        <a class="nav-link text-light" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@string.Format("{0}{1}", Context.Request.Path, Context.Request.QueryString)" style="color:wheat">&nbsp; Log in</a>
+        <a class="nav-link text-light" asp-controller="Account" asp-action="Register" style="color-white">&nbsp;Registro&nbsp;&nbsp;</a>
+    </ul>
+}

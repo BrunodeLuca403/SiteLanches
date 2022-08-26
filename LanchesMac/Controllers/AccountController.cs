@@ -55,11 +55,12 @@ namespace LanchesMac.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(LoginViewModel registroVM)
         {
             if(ModelState.IsValid)
-            {
-                var user = await _userManager.FindByNameAsync(registroVM.UserName);
+            {  
+                var user = new IdentityUser { UserName = registroVM.UserName };
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
 
                 if(result.Succeeded)
@@ -73,6 +74,16 @@ namespace LanchesMac.Controllers
                 }
             }
             return View(registroVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.User = null;
+            await _signManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }

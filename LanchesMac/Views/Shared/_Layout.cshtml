@@ -34,11 +34,11 @@
                            <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Procurar Produto" name="searchString" value="@ViewData["searchString"]">
                            </div>
-                          
+                            @await Component.InvokeAsync("CarrinhoCompraResumo")
                        </form>
 
-                        @await Component.InvokeAsync("CarrinhoCompraResumo")
-                       
+                      
+                       @await Html.PartialAsync("_LoginPartial")
                      
                     </ul>
                 </div>
