@@ -2,6 +2,7 @@ using LanchesMac.Context;
 using LanchesMac.Models;
 using LanchesMac.Repository;
 using LanchesMac.Repository.Interface;
+using LanchesMac.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,15 @@ builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddTransient<ILancheRepository, LancheRepository>();
 builder.Services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
+builder.Services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+builder.Services.AddAuthorization(options => 
+{
+    options.AddPolicy("Admin", Politica =>
+    {
+        Politica.RequireRole("Admin");
+    });
+});
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
@@ -42,6 +52,19 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+CriarPerfisUsuarios(app);
+
+void CriarPerfisUsuarios(WebApplication app)
+{
+    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
+    using (var scope = scopedFactory.CreateScope())
+    {
+        var service = scope.ServiceProvider.GetService<ISeedUserRoleInitial>();
+        service.SeedUser();
+        service.SeedRoles();
+    }
+}
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -49,25 +72,33 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseSession();   
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
+app.UseStaticFiles();
 app.UseRouting();
+
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
+  
     endpoints.MapControllerRoute(
-    name: "categoriaFiltro",
-    pattern: "Lanche/{action}/{categoria}",
-    defaults: new { Controller = "Lanche", action = "List"});
+      name: "areas",
+      pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
+    );
 
     endpoints.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+        name: "categoriaFiltro",
+        pattern: "Lanche/{action}/{categoria}",
+        defaults: new { Controller = "Lanche", action = "List"});
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
 });
 
